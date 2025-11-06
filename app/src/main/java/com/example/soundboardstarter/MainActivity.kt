@@ -10,19 +10,19 @@ import android.widget.Button
 class MainActivity : AppCompatActivity() {
 
     val TAG = "MainActivity"
-    lateinit var buttonA : Button
-    lateinit var buttonBb : Button
-    lateinit var buttonB : Button
-    lateinit var buttonC : Button
-    lateinit var buttonCs : Button
-    lateinit var buttonD : Button
-    lateinit var buttonDs : Button
-    lateinit var buttonE : Button
-    lateinit var buttonF : Button
-    lateinit var buttonFs : Button
-    lateinit var buttonG : Button
-    lateinit var buttonGs : Button
-    lateinit var soundPool : SoundPool
+    private lateinit var buttonA : Button
+    private lateinit var buttonBb : Button
+    private lateinit var buttonB : Button
+    private lateinit var buttonC : Button
+    private lateinit var buttonCs : Button
+    private lateinit var buttonD : Button
+    private lateinit var buttonDs : Button
+    private lateinit var buttonE : Button
+    private lateinit var buttonF : Button
+    private lateinit var buttonFs : Button
+    private lateinit var buttonG : Button
+    private lateinit var buttonGs : Button
+    private lateinit var soundPool : SoundPool
     var aNote = 0
     var bbNote = 0
     var bNote = 0
