@@ -37,6 +37,19 @@ class MainActivity : AppCompatActivity() {
         setListeners()
     }
 
+    private fun playSong(song: List<Note>) {
+        TODO()
+    }
+
+    private fun delay(time: Long) {
+        try {
+            Thread.sleep(time)
+        }
+        catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+    }
+
     private fun initializeSoundPool() {
 
         this.volumeControlStream = AudioManager.STREAM_MUSIC
