@@ -6,23 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import com.example.soundboardstarter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     val TAG = "MainActivity"
-    private lateinit var buttonA : Button
-    private lateinit var buttonBb : Button
-    private lateinit var buttonB : Button
-    private lateinit var buttonC : Button
-    private lateinit var buttonCs : Button
-    private lateinit var buttonD : Button
-    private lateinit var buttonDs : Button
-    private lateinit var buttonE : Button
-    private lateinit var buttonF : Button
-    private lateinit var buttonFs : Button
-    private lateinit var buttonG : Button
-    private lateinit var buttonGs : Button
-    private lateinit var soundPool : SoundPool
+    private lateinit var soundPool: SoundPool
     var aNote = 0
     var bbNote = 0
     var bNote = 0
@@ -36,12 +25,14 @@ class MainActivity : AppCompatActivity() {
     var gNote = 0
     var gsNote = 0
 
+    private  lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        wireWidgets()
         initializeSoundPool()
         setListeners()
     }
@@ -67,35 +58,20 @@ class MainActivity : AppCompatActivity() {
         gsNote =  soundPool.load(this, R.raw.scalegs, 1)
     }
 
-    private fun wireWidgets() {
-        buttonA = findViewById(R.id.button_main_a)
-        buttonBb = findViewById(R.id.button_main_bb)
-        buttonB = findViewById(R.id.button_main_b)
-        buttonC = findViewById(R.id.button_main_c)
-        buttonCs = findViewById(R.id.button_main_cs)
-        buttonD = findViewById(R.id.button_main_d)
-        buttonDs = findViewById(R.id.button_main_ds)
-        buttonE = findViewById(R.id.button_main_e)
-        buttonF = findViewById(R.id.button_main_f)
-        buttonFs = findViewById(R.id.button_main_fs)
-        buttonG = findViewById(R.id.button_main_g)
-        buttonGs = findViewById(R.id.button_main_gs)
-    }
-
     private fun setListeners() {
         val soundBoardListener = SoundBoardListener()
-        buttonA.setOnClickListener(soundBoardListener)
-        buttonBb.setOnClickListener(soundBoardListener)
-        buttonB.setOnClickListener(soundBoardListener)
-        buttonC.setOnClickListener(soundBoardListener)
-        buttonCs.setOnClickListener(soundBoardListener)
-        buttonD.setOnClickListener(soundBoardListener)
-        buttonDs.setOnClickListener(soundBoardListener)
-        buttonE.setOnClickListener(soundBoardListener)
-        buttonF.setOnClickListener(soundBoardListener)
-        buttonFs.setOnClickListener(soundBoardListener)
-        buttonG.setOnClickListener(soundBoardListener)
-        buttonGs.setOnClickListener(soundBoardListener)
+        binding.buttonMainA.setOnClickListener(soundBoardListener)
+        binding.buttonMainBb.setOnClickListener(soundBoardListener)
+        binding.buttonMainB.setOnClickListener(soundBoardListener)
+        binding.buttonMainC.setOnClickListener(soundBoardListener)
+        binding.buttonMainCs.setOnClickListener(soundBoardListener)
+        binding.buttonMainD.setOnClickListener(soundBoardListener)
+        binding.buttonMainDs.setOnClickListener(soundBoardListener)
+        binding.buttonMainE.setOnClickListener(soundBoardListener)
+        binding.buttonMainF.setOnClickListener(soundBoardListener)
+        binding.buttonMainFs.setOnClickListener(soundBoardListener)
+        binding.buttonMainG.setOnClickListener(soundBoardListener)
+        binding.buttonMainGs.setOnClickListener(soundBoardListener)
     }
 
 
