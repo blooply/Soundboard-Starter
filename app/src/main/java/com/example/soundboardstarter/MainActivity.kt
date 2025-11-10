@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     var fsNote = 0
     var gNote = 0
     var gsNote = 0
+    
+    private val noteMap = HashMap<String, Int>()
 
     private  lateinit var binding: ActivityMainBinding
 
@@ -69,6 +71,19 @@ class MainActivity : AppCompatActivity() {
         fsNote = soundPool.load(this, R.raw.scalefs, 1)
         gNote = soundPool.load(this, R.raw.scaleg, 1)
         gsNote =  soundPool.load(this, R.raw.scalegs, 1)
+
+        noteMap["A"] = aNote
+        noteMap["Bb"] = bbNote
+        noteMap["B"] = bNote
+        noteMap["C"] = cNote
+        noteMap["Cs"] = csNote
+        noteMap["D"] = dNote
+        noteMap["Ds"] = dsNote
+        noteMap["E"] = eNote
+        noteMap["F"] = fNote
+        noteMap["Fs"] = fsNote
+        noteMap["G"] = gNote
+        noteMap["Gs"] = gsNote
     }
 
     private fun setListeners() {
@@ -87,6 +102,9 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainGs.setOnClickListener(soundBoardListener)
     }
 
+    private fun playNote(note: String) {
+        playNote(noteMap[note] ?: 0)
+    }
 
     private fun playNote(noteId : Int) {
         soundPool.play(noteId, 1f, 1f, 1, 0, 1f)
