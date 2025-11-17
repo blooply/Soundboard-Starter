@@ -146,7 +146,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_main_f" />
 
     <Button
-        android:id="@+id/button_main_play_song"
+        android:id="@+id/button_main_playsong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Play Song"
