@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        val TAG = "MainActivity"
+        const val TAG = "MainActivity"
     }
 
     private lateinit var soundPool: SoundPool
