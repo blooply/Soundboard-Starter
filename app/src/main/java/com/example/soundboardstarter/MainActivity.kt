@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var gson = Gson()
+        val gson = Gson()
         val inputStream = resources.openRawResource(R.raw.song)
         val jsonString = inputStream.bufferedReader().use {
             it.readText()
