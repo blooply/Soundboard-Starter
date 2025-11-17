@@ -4,13 +4,24 @@ import android.media.AudioManager
 import android.media.SoundPool
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import com.example.soundboardstarter.databinding.ActivityMainBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
-    val TAG = "MainActivity"
+    companion object {
+        val TAG = "MainActivity"
+    }
+
     private lateinit var soundPool: SoundPool
     var aNote = 0
     var bbNote = 0
@@ -34,13 +45,55 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var gson = Gson()
+        val inputStream = resources.openRawResource(R.raw.song)
+        val jsonString = inputStream.bufferedReader().use {
+            it.readText()
+        }
+        val type = object : TypeToken<List<Note>>(){}.type
+        val notes = gson.fromJson<List<Note>>(jsonString, type)
+        Log.d(TAG, "onCreate: $notes")
 
         initializeSoundPool()
         setListeners()
     }
 
+    private fun stringConvert(song : String) {
+        val songShorten = song.split(" ")
+        val listOfNotes = arrayListOf<Note>()
+
+        for(i in songShorten.indices step 2) {
+            listOfNotes.add(Note(songShorten[i + 1].toLong(), songShorten[i]))
+        }
+    }
+
     private fun playSong(song: List<Note>) {
         TODO()
+    }
+
+    private suspend fun playSimpleSong() {
+        withContext(Dispatchers.Main) {
+            binding.buttonMainPlaySong.text = "Playing Song"
+        }
+
+        playNote(aNote)
+        delay(500)
+        playNote(bNote)
+        delay(500)
+        playNote(bNote)
+        delay(500)
+        playNote(aNote)
+        delay(500)
+        playNote(bNote)
+        playNote(aNote)
+        delay(500)
+        playNote(aNote)
+        delay(500)
+        playNote(bNote)
+
+        withContext(Dispatchers.Main) {
+            binding.buttonMainPlaySong.text = "Play Song"
+        }
     }
 
     private fun delay(time: Long) {
@@ -88,6 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
         val soundBoardListener = SoundBoardListener()
+
         binding.buttonMainA.setOnClickListener(soundBoardListener)
         binding.buttonMainBb.setOnClickListener(soundBoardListener)
         binding.buttonMainB.setOnClickListener(soundBoardListener)
@@ -100,6 +154,12 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainFs.setOnClickListener(soundBoardListener)
         binding.buttonMainG.setOnClickListener(soundBoardListener)
         binding.buttonMainGs.setOnClickListener(soundBoardListener)
+
+        binding.buttonMainPlaySong.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                playSimpleSong()
+            }
+        }
     }
 
     private fun playNote(note: String) {
