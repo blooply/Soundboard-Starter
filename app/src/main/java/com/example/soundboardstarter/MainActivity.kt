@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun playSimpleSong() {
         withContext(Dispatchers.Main) {
-            binding.buttonMainPlaySong.text = "Playing Song"
+            binding.buttonMainPlaysong.text = "Playing Song"
         }
 
         playNote(aNote)
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         playNote(bNote)
 
         withContext(Dispatchers.Main) {
-            binding.buttonMainPlaySong.text = "Play Song"
+            binding.buttonMainPlaysong.text = "Play Song"
         }
     }
 
