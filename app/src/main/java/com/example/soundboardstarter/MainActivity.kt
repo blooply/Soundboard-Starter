@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun playSong(song: List<Note>) {
+    private suspend fun playSong(song: List<Note>) {
         TODO()
     }
 
