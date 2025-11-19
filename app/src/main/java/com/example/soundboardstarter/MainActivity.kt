@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainG.setOnClickListener(soundBoardListener)
         binding.buttonMainGs.setOnClickListener(soundBoardListener)
 
-        binding.buttonMainPlaySong.setOnClickListener {
+        binding.buttonMainPlaysong.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 playSimpleSong()
             }
