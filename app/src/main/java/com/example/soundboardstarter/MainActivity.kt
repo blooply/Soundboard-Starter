@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val songString = "A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500"
+    private val songString = "500 G 500 G 250 A 500 A 250 B 250 D 250 B 250 G"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val noteList = ArrayList<Note>()
 
         for(i in shortSong.indices step 2) {
-            noteList.add(Note(shortSong[i + 1].toLong(), shortSong[i]))
+            noteList.add(Note(shortSong[i].toLong(), shortSong[i + 1]))
         }
 
         return noteList
@@ -107,7 +107,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeSoundPool() {
-
         this.volumeControlStream = AudioManager.STREAM_MUSIC
         soundPool = SoundPool(10, AudioManager.STREAM_MUSIC, 0)
 //        soundPool.setOnLoadCompleteListener(SoundPool.OnLoadCompleteListener { soundPool, sampleId, status ->
