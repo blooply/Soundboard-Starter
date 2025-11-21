@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val songString = "A 500 B 500"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,17 +58,30 @@ class MainActivity : AppCompatActivity() {
         setListeners()
     }
 
-    private fun stringConvert(song : String) {
-        val songShorten = song.split(" ")
-        val listOfNotes = arrayListOf<Note>()
+    private fun convertString(song : String) : ArrayList<Note> {
+        val shortSong = song.split(" ")
+        val noteList = arrayListOf<Note>()
 
-        for(i in songShorten.indices step 2) {
-            listOfNotes.add(Note(songShorten[i + 1].toLong(), songShorten[i]))
+        for(i in shortSong.indices step 2) {
+            noteList.add(Note(shortSong[i + 1].toLong(), shortSong[i]))
         }
+
+        return noteList
     }
 
     private suspend fun playSong(song: List<Note>) {
-        TODO()
+        withContext(Dispatchers.Main) {
+            binding.buttonMainPlaysong.text = "Playing Song"
+        }
+
+        for (note in song) {
+            playNote(note.note)
+            delay(note.duration)
+        }
+
+        withContext(Dispatchers.Main) {
+            binding.buttonMainPlaysong.text = "Play Song"
+        }
     }
 
     private suspend fun playSimpleSong() {
@@ -155,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonMainPlaysong.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                playSimpleSong()
+                playSong(convertString(songString))
             }
         }
     }
