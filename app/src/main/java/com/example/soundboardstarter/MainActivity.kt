@@ -33,12 +33,15 @@ class MainActivity : AppCompatActivity() {
     var fsNote = 0
     var gNote = 0
     var gsNote = 0
+
+    private var playing = false
+    private var stop = false
     
     private val noteMap = HashMap<String, Int>()
 
     private lateinit var binding: ActivityMainBinding
 
-    private val songString = "A 500 B 500"
+    private val songString = "A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500 A 500"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun convertString(song : String) : ArrayList<Note> {
         val shortSong = song.split(" ")
-        val noteList = arrayListOf<Note>()
+        val noteList = ArrayList<Note>()
 
         for(i in shortSong.indices step 2) {
             noteList.add(Note(shortSong[i + 1].toLong(), shortSong[i]))
@@ -70,25 +73,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun playSong(song: List<Note>) {
-        withContext(Dispatchers.Main) {
-            binding.buttonMainPlaysong.text = "Playing Song"
-        }
-
         for (note in song) {
+            if (stop) break
             playNote(note.note)
             delay(note.duration)
-        }
-
-        withContext(Dispatchers.Main) {
-            binding.buttonMainPlaysong.text = "Play Song"
         }
     }
 
     private suspend fun playSimpleSong() {
-        withContext(Dispatchers.Main) {
-            binding.buttonMainPlaysong.text = "Playing Song"
-        }
-
         playNote(aNote)
         delay(500)
         playNote(bNote)
@@ -103,10 +95,6 @@ class MainActivity : AppCompatActivity() {
         playNote(aNote)
         delay(500)
         playNote(bNote)
-
-        withContext(Dispatchers.Main) {
-            binding.buttonMainPlaysong.text = "Play Song"
-        }
     }
 
     private fun delay(time: Long) {
@@ -169,8 +157,25 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainGs.setOnClickListener(soundBoardListener)
 
         binding.buttonMainPlaysong.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                playSong(convertString(songString))
+            if (!playing) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.Main) {
+                        binding.buttonMainPlaysong.text = "Stop Song"
+                        playing = true
+                        stop = false
+                    }
+
+                    playSong(convertString(songString))
+
+                    withContext(Dispatchers.Main) {
+                        binding.buttonMainPlaysong.text = "Play Song"
+                        playing = false
+                    }
+                }
+            }
+            else {
+                stop = true
+                playing = false
             }
         }
     }
